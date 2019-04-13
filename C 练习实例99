@@ -1,0 +1,35 @@
+//题目来自菜鸟教程
+//题目：有两个磁盘文件A和B,各存放一行字母，要求把这两个文件中的信息合并（按字母顺序排列），输出到一个新文件C中。
+
+
+#include<stdio.h>
+int main()
+{
+	FILE *fp1,*fp2,*fp3;                                              //先创立三个文件指针
+	char arr[100];                                                    //保存文件一的字母
+	char arr1[100];	                                                  //保存文件二的字母
+	if ((fp1 = fopen("stu1.txt","r")) == null)                        //打开文件一
+		exit(0);
+	if ((fp2 = fopen("stu2.txt","r")) == null)                        //打开文件二
+		exit(0);
+	fgets(arr, 99, fp1);                                              //获得文件一的字母
+	fgets(arr1, 100, fp2);                                            //获得文件二的字母
+	strcat(arr,arr1);                                                 //将文件二的字母连接到文件一的后面
+	int len = strlen(arr);                                            //获得字母的总长度
+	for (int i = 0; i < len - 1; i++) {                               //冒泡排序
+		for (int j = 0; j < len - i - 1; j++) {
+			if (arr[j] > arr[j + 1]) {
+				char tem = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = tem;
+			}
+		}
+	}
+	if ((fp3 = fopen("stu3.txt","w")) == null) {                      //打开文件三
+		exit(0);
+	}
+	fputs(arr, fp3);                                                  //将字母写入文件三
+  close(fp1);                                                       //关闭文件
+  close(fp2);
+  close(fp3);
+}
